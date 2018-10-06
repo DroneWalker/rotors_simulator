@@ -1,0 +1,30 @@
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/charris/rotors_ws/src/rotors_simulator/rotors_control
+-- Using CATKIN_DEVEL_PREFIX: /home/charris/rotors_ws/src/rotors_simulator/rotors_control/cmake-build-debug/devel
+-- Using CMAKE_PREFIX_PATH: /home/charris/rotors_ws/devel;/home/charris/introrobotics/turtlebot-gt-2018/devel;/home/charris/mav_ws/devel;/home/charris/examples/devel;/home/charris/catkin_ws/devel;/opt/ros/kinetic
+-- This workspace overlays: /home/charris/rotors_ws/devel;/home/charris/introrobotics/turtlebot-gt-2018/devel;/home/charris/mav_ws/devel;/home/charris/examples/devel;/home/charris/catkin_ws/devel;/opt/ros/kinetic
+-- Using PYTHON_EXECUTABLE: /usr/bin/python
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/charris/rotors_ws/src/rotors_simulator/rotors_control/cmake-build-debug/test_results
+-- Found gtest: gtests will be built
+-- Using Python nosetests: /usr/bin/nosetests-2.7
+-- catkin 0.7.14
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+CMake Warning at /opt/ros/kinetic/share/cmake_modules/cmake/Modules/FindEigen.cmake:62 (message):
+  The FindEigen.cmake Module in the cmake_modules package is deprecated.
+
+  Please use the FindEigen3.cmake Module provided with Eigen.  Change
+  instances of find_package(Eigen) to find_package(Eigen3).  Check the
+  FindEigen3.cmake Module for the resulting CMake variable names.
+
+Call Stack (most recent call first):
+  CMakeLists.txt:15 (find_package)
+
+
+-- Eigen found (include: /usr/include/eigen3)
+UTIL /usr/lib/x86_64-linux-gnu/libGLU.so;/usr/lib/x86_64-linux-gnu/libGL.so;/usr/lib/x86_64-linux-gnu/libglut.so;/usr/lib/x86_64-linux-gnu/libXmu.so;/usr/lib/x86_64-linux-gnu/libXi.so;gcop_utils;/usr/lib/x86_64-linux-gnu/libtinyxml.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/charris/rotors_ws/src/rotors_simulator/rotors_control/cmake-build-debug

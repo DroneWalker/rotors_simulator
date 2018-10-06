@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/charris/rotors_ws/src/rotors_simulator/rotors_control/cmake-build-debug/devel/setup.sh

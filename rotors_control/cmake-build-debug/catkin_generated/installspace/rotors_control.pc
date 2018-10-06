@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: rotors_control
+Description: Description of rotors_control
+Version: 2.1.1
+Cflags: -I/usr/local/include -I/usr/include/eigen3
+Libs: -L/usr/local/lib -llee_position_controller -lroll_pitch_yawrate_thrust_controller
+Requires: geometry_msgs mav_msgs nav_msgs roscpp sensor_msgs
