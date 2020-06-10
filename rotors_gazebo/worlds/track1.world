@@ -1,0 +1,94 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane_residential</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>0 5 2.5 0 3.1415 3.1415</pose>
+	<name>Gate1</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>0 15 2.5 0 3.1415 3.1415</pose>
+	<name>Gate2</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>2.929 22.071 2.5 0 3.1415 2.3562</pose>
+	<name>Gate3</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>10 25 2.5 0 3.1415 1.5708</pose>
+	<name>Gate4</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>17.071 22.071 2.5 0 3.1415 0.7854</pose>
+	<name>Gate5</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>20 15 2.5 0 3.1415 0</pose>
+	<name>Gate6</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>20 5 2.5 0 3.1415 0</pose>
+	<name>Gate7</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>17.071 -2.071 2.5 0 3.1415 -0.7854</pose>
+	<name>Gate8</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>10 -5 2.5 0 3.1415 -1.5708</pose>
+	<name>Gate9</name>
+    </include>
+    <include>
+      <uri>model://AlphaPilotGate</uri>
+        <pose>2.929 -2.071 2.5 0 3.1415 -2.3562</pose>
+	<name>Gate10</name>
+    </include>
+
+
+
+    <!-- Only one ROS interface plugin is required per world, as any other plugin can connect a Gazebo
+         topic to a ROS topic (or vise versa). -->
+    <plugin name="ros_interface_plugin" filename="librotors_gazebo_ros_interface_plugin.so"/>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>47.3667</latitude_deg>
+      <longitude_deg>8.5500</longitude_deg>
+      <elevation>500.0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <physics type='ode'>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>1000</iters>
+          <sor>1.3</sor>
+        </solver>
+        <constraints>
+          <cfm>0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>100</contact_max_correcting_vel>
+          <contact_surface_layer>0.001</contact_surface_layer>
+        </constraints>
+      </ode>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+  </world>
+</sdf>

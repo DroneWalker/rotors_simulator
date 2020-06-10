@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="AlphaPilotGate">
+    <pose>0 0 0.75  0 3.1415 0</pose>
+    <static>true</static>
+    <link name="link">
+      <inertial>
+        <mass>40.0</mass>
+        <inertia>
+          <ixx>1</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1</iyy>
+          <iyz>0</iyz>
+          <izz>1</izz>
+        </inertia>
+      </inertial>
+
+      
+        <collision name = "collision">
+     	  <origin rpy="0 0 0" xyz="0.15 0 0.35"/>
+            <geometry>
+              <mesh>
+            	<uri>model://AlphaPilotGate/Meshes/AlphaPilotGate.STL</uri>
+	    	<scale> 0.001 0.001 0.001 </scale>
+              </mesh>
+     	    </geometry>
+   	</collision>
+
+
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://AlphaPilotGate/Meshes/AlphaPilotGate.STL</uri>
+	    <scale> 0.001 0.001 0.001 </scale>
+          </mesh>
+	</geometry>
+	<material>
+	  <ambient>0.1 0.1 0.5 1</ambient>
+	  <diffuse>0.1 0.1 0.5 1</diffuse>
+	  <specular>0 0 0 0</specular>
+	  <emissive>0 0 0 1</emissive>
+	</material>
+      </visual>
+    </link>
+  </model>
+</sdf>

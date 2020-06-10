@@ -1,0 +1,11 @@
+<launch>
+       <node name="mav_nonlinear_mpc" pkg="mav_nonlinear_mpc" type="nonlinear_mpc_node" respawn="true" clear_params="true" output="screen">
+      <remap from="odometry" to="eskf/pose" />
+      <remap from="/uav/input/ratethrust" to="/uav/input/rateThrust" />
+      <rosparam file="$(find mav_nonlinear_mpc)/resources/nonlinear_mpc_hummingbird.yaml" />
+      <rosparam file="$(find mav_disturbance_observer)/resources/disturbance_observer_hummingbird.yaml"/>
+      <param name="verbose" value="true" />
+
+      <param name="reference_frame" value="world" />
+      </node>
+</launch>
