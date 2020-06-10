@@ -1,0 +1,3 @@
+[submodule "mav_control_rw"]
+	path = mav_control_rw
+	url = https://github.com/calebh94/mav_control_rw
