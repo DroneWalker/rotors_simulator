@@ -1,0 +1,13 @@
+material ArucoVisualMarker6x6_50_res800_id0/Marker
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture markerTypeDICT_6X6_50_res800_id0.png
+			}
+		}
+	}
+}
