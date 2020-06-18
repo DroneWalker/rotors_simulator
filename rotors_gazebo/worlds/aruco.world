@@ -11,6 +11,10 @@
       <uri>model://aruco_visual_marker_0</uri>
       <pose>0 0 0 0 0 0</pose>
     </include>
+    <include> 
+      <uri>model://cabinet</uri>
+      <pose>2 0 0 0 0 0</pose>
+    </include>
 
     <!-- Only one ROS interface plugin is required per world, as any other plugin can connect a Gazebo
          topic to a ROS topic (or vise versa). -->
