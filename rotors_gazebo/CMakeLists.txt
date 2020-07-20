@@ -76,6 +76,10 @@ add_executable(obstacle_init src/obstacle_init.cpp)
 target_link_libraries(obstacle_init ${catkin_LIBRARIES})
 add_dependencies(obstacle_init ${catkin_EXPORTED_TARGETS})
 
+add_executable(collins_init src/collins_init.cpp)
+target_link_libraries(collins_init ${catkin_LIBRARIES})
+add_dependencies(collins_init ${catkin_EXPORTED_TARGETS})
+
 foreach(dir launch models resource worlds)
    install(DIRECTORY ${dir}/
       DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
