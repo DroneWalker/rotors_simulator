@@ -1,5 +1,5 @@
 <launch>
-  <arg name="mav_name" default="DJI"/>
+  <arg name="mav_name" default="firefly"/>
   <arg name="world_name" default="aruco"/>
   <arg name="namespace" default="$(arg mav_name)"/>
   <arg name="enable_logging" default="false" />
@@ -29,7 +29,7 @@
   <group ns="$(arg mav_name)">
     <include file="$(find rotors_gazebo)/launch/spawn_mav.launch">
       <arg name="mav_name" value="$(arg mav_name)" />
-      <arg name="model" value="$(find rotors_description)/urdf/DJI_with_vi_sensor.gazebo" />
+      <arg name="model" value="$(find rotors_description)/urdf/firefly_with_vi_sensor.gazebo" />
       <arg name="enable_logging" value="$(arg enable_logging)" />
       <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
       <arg name="log_file" value="$(arg log_file)"/>
@@ -50,5 +50,7 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
   </group>
+
+    <node name="visnav_node" pkg="visnav" type="visnav_node" />
 
 </launch>

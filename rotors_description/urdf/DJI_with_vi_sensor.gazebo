@@ -42,7 +42,8 @@
     enable_visual="true">
 
     <box size="0.023 0.0288 0.02955" />
-    <origin xyz=".04459 .03925 -.05168" rpy="0 1.5708 0.785398" />
+    <!-- origin xyz=".04459 .03925 -.05168" rpy="0 1.5708 0.785398" / -->
+    <origin xyz=".06459 .05925 -.05168" rpy="0 0.785398 0.785398" />
   </xacro:camera_macro>
 
 <!--Mount Stereo Camera -->
@@ -54,7 +55,7 @@
       enable_depth="true"
       enable_ground_truth="true">
 
-    <origin xyz=".06459 .05925 -.10168" rpy="0.0 0.0 ${pi/4}" />
+    <origin xyz=".05459 .04925 -.10168" rpy="0.0 0.0 ${pi/4}" />
   </xacro:vi_sensor_macro>
 
 
