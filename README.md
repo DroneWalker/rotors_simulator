@@ -1,14 +1,3 @@
-# RotorS - Collins SEPP Branch
-==============================
-
-The updates to this version of the RotorS simulator is for the SEPP project at Collins Aerospace during Summer 2020.
-
-
-
-
-
-
-
 RotorS Original README
 ===============
 
