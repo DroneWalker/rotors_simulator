@@ -1,4 +1,4 @@
-RotorS
+RotorS Original README
 ===============
 
 RotorS is a MAV gazebo simulator.

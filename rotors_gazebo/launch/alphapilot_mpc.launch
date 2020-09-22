@@ -1,6 +1,6 @@
 <launch>
-  <arg name="mav_name" default="firefly"/>
-  <arg name="world_name" default="obstacle" />
+  <arg name="mav_name" default="hummingbird"/>
+  <arg name="world_name" default="track1" />
   <arg name="namespace" default="$(arg mav_name)"/>
   <arg name="enable_logging" default="false" />
   <arg name="enable_ground_truth" default="true" />

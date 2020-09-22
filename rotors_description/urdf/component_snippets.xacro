@@ -112,6 +112,7 @@
           <distortionK3>0.0</distortionK3>
           <distortionT1>0.0</distortionT1>
           <distortionT2>0.0</distortionT2>
+          <focalLength>0.0013</focalLength>
         </plugin>
       </sensor>
     </gazebo>
@@ -711,7 +712,7 @@
       </visual>
 
       <inertial>
-        <mass value="0.13" />
+        <mass value="0.001" />
         <origin xyz="0 0 0" rpy="0 0 0" />
         <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
       </inertial>
@@ -793,6 +794,231 @@
       <origin xyz="0.015 0 0.0113" rpy="0 0 0" />
     </xacro:imu_plugin_macro>
   </xacro:macro>
+
+
+<!-- ====================================== -->
+  <!-- ZED-Stereo-Camera MACROS-->
+<!-- Macro to add a ZED camera.  Using HD1080 settings (30fps, 1920x1080 each cam) -->
+<!-- https://support.stereolabs.com/hc/en-us/articles/360007395634-What-is-the-camera-focal-length-and-field-of-view- -->
+  <xacro:macro name="zed_cam_camera_macro"
+    params="namespace parent_link camera_suffix frame_rate *origin">
+    <xacro:camera_macro
+      namespace="${namespace}"
+      parent_link="${parent_link}"
+      camera_suffix="${camera_suffix}"
+      frame_rate="30.0"
+      horizontal_fov="1.53589"
+      image_width="1920"
+      image_height="1080"
+      image_format="R8G8B8"
+      min_distance="0.02"
+      max_distance="40"
+      noise_mean="0.0"
+      noise_stddev="0.007"
+      enable_visual="true">
+      <mesh filename="package://rotors_description/meshes/vi_camera.dae" scale="1 1 1" />
+      <xacro:insert_block name="origin" />
+    </xacro:camera_macro>
+  </xacro:macro>
+
+  <!-- Macro to add a VI-sensor stereo camera. -->
+  <xacro:macro name="zed_cam_stereo_camera_macro"
+    params="namespace parent_link frame_rate origin_offset_x baseline_y origin_offset_z max_range">
+    <xacro:stereo_camera_macro
+      namespace="${namespace}"
+      camera_name="zed_cam"
+      parent_link="${parent_link}"
+      frame_rate="30.0"
+      horizontal_fov="1.53589"
+      image_width="1920"
+      image_height="1080"
+      image_format="R8G8B8"
+      min_distance="0.02"
+      max_distance="40"
+      noise_mean="0.0"
+      noise_stddev="0.007"
+      enable_visual="true"
+      origin_offset_x="${origin_offset_x}"
+      baseline_y="${baseline_y}"
+      origin_offset_z="${origin_offset_z}" >
+      <cylinder length="0.01" radius="0.007" />
+    </xacro:stereo_camera_macro>
+  </xacro:macro>
+
+  <!-- Macro to add a depth camera on the VI-sensor. -->
+  <xacro:macro name="zed_cam_depth_macro"
+    params="namespace parent_link camera_suffix frame_rate max_range *origin">
+    <link name="${namespace}/camera_${camera_suffix}_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder length="0.01" radius="0.007" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="1e-5" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      </inertial>
+    </link>
+    <joint name="${namespace}/camera_${camera_suffix}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent_link}" />
+      <child link="${namespace}/camera_${camera_suffix}_link" />
+      <limit upper="0" lower="0" effort="0" velocity="0" />
+    </joint>
+    <!-- Optical center of camera -->
+    <!-- using half resolution of camera images -->
+    <link name="${namespace}/camera_${camera_suffix}_optical_center_link" />
+    <joint name="${namespace}/camera_${camera_suffix}_optical_center_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+      <parent link="${namespace}/camera_${camera_suffix}_link" />
+      <child link="${namespace}/camera_${camera_suffix}_optical_center_link" />
+      <limit upper="0" lower="0" effort="0" velocity="0" />
+    </joint>
+    <gazebo reference="${namespace}/camera_${camera_suffix}_link">
+      <sensor type="depth" name="${namespace}_camera_{camera_suffix}">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <camera>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image>
+            <format>R8G8B8</format>
+            <width>960</width>
+            <height>540</height>
+          </image>
+          <clip>
+            <near>0.3</near>
+            <far>25.0</far>
+          </clip>
+        </camera>
+        <plugin name="${namespace}_camera_{camera_suffix}" filename="libgazebo_ros_openni_kinect.so">
+          <robotNamespace>${namespace}</robotNamespace>
+          <alwaysOn>true</alwaysOn>
+          <baseline>0.12</baseline>
+          <updateRate>30.0</updateRate>
+          <cameraName>camera_${camera_suffix}</cameraName>
+          <imageTopicName>camera/image_raw</imageTopicName>
+          <cameraInfoTopicName>camera/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>depth/depth_map</depthImageTopicName>
+          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+          <pointCloudTopicName>depth/point_cloud</pointCloudTopicName>
+          <frameName>camera_${camera_suffix}_optical_center_link</frameName>
+          <pointCloudCutoff>0.3</pointCloudCutoff>
+          <pointCloudCutoffMax>25.0</pointCloudCutoffMax>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- ZED-Stereo-Camera -->
+  <xacro:macro name="zed_cam_macro" params="namespace parent_link enable_cameras enable_depth enable_ground_truth *origin">
+    <!-- Vi Sensor Link -->
+    <link name="${namespace}/zed_cam_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.175 0.030 0.033" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0.0 1.5708" />
+        <geometry>
+          <mesh filename="package://rotors_description/meshes/zed.stl" scale="0.01 0.01 0.01" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <mass value="0.001" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      </inertial>
+    </link>
+    <joint name="${namespace}_zed_cam_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent_link}" />
+      <child link="${namespace}/zed_cam_link" />
+    </joint>
+    <!-- Cameras -->
+    <xacro:if value="${enable_cameras}">
+      <!-- Insert stereo pair. -->
+      <xacro:zed_cam_stereo_camera_macro
+        namespace="${namespace}" parent_link="${namespace}/zed_cam_link"
+        frame_rate="30.0" origin_offset_x="0.015" baseline_y="${0.055*2}"
+        origin_offset_z="0.0065" max_range="40.0">
+      </xacro:zed_cam_stereo_camera_macro>
+    </xacro:if>
+
+    <!-- Depth Sensor -->
+    <xacro:if value="${enable_depth}">
+      <xacro:zed_cam_depth_macro
+        namespace="${namespace}" parent_link="${namespace}/zed_cam_link"
+        camera_suffix="depth" frame_rate="20.0" max_range="30.0">
+        <origin xyz="0.015 0.055 0.0065" rpy="0 0 0" />
+      </xacro:zed_cam_depth_macro>
+    </xacro:if>
+
+    <!-- Groundtruth -->
+    <xacro:if value="${enable_ground_truth}">
+      <!-- Odometry Sensor -->
+      <xacro:odometry_plugin_macro
+        namespace="${namespace}/ground_truth"
+        odometry_sensor_suffix=""
+        parent_link="${namespace}/zed_cam_link"
+        pose_topic="pose"
+        pose_with_covariance_topic="pose_with_covariance"
+        position_topic="position"
+        transform_topic="transform"
+        odometry_topic="odometry"
+        parent_frame_id="world"
+        child_frame_id="${namespace}/base_link"
+        mass_odometry_sensor="0.00001"
+        measurement_divisor="1"
+        measurement_delay="0"
+        unknown_delay="0.0"
+        noise_normal_position="0 0 0"
+        noise_normal_quaternion="0 0 0"
+        noise_normal_linear_velocity="0 0 0"
+        noise_normal_angular_velocity="0 0 0"
+        noise_uniform_position="0 0 0"
+        noise_uniform_quaternion="0 0 0"
+        noise_uniform_linear_velocity="0 0 0"
+        noise_uniform_angular_velocity="0 0 0"
+        enable_odometry_map="false"
+        odometry_map=""
+        image_scale="">
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" /> <!-- [kg m^2] [kg m^2] [kg m^2] [kg m^2] [kg m^2] [kg m^2] -->
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      </xacro:odometry_plugin_macro>
+    </xacro:if>
+
+    <!-- ADIS16448 IMU. -->
+    <xacro:imu_plugin_macro
+      namespace="${namespace}"
+      imu_suffix=""
+      parent_link="${namespace}/zed_cam_link"
+      imu_topic="imu"
+      mass_imu_sensor="0.015"
+      gyroscope_noise_density="0.0003394"
+      gyroscope_random_walk="0.000038785"
+      gyroscope_bias_correlation_time="1000.0"
+      gyroscope_turn_on_bias_sigma="0.0087"
+      accelerometer_noise_density="0.004"
+      accelerometer_random_walk="0.006"
+      accelerometer_bias_correlation_time="300.0"
+      accelerometer_turn_on_bias_sigma="0.1960">
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      <origin xyz="0.015 0 0.0113" rpy="0 0 0" />
+    </xacro:imu_plugin_macro>
+  </xacro:macro>
+
+<!-- ====================================== -->
 
   <xacro:macro name="ground_truth_imu_and_odometry" params="namespace parent_link">
     <!-- Mount an IMU providing ground truth. -->

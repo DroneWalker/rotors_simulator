@@ -1,3 +1,9 @@
 [submodule "mav_control_rw"]
 	path = mav_control_rw
 	url = https://github.com/calebh94/mav_control_rw
+[submodule "rotors_gazebo/models/aruco_gazebo"]
+	path = rotors_gazebo/models/aruco_gazebo
+	url = git@github.com:joselusl/aruco_gazebo.git
+[submodule "rotors_description/dji_m100_description"]
+	path = rotors_description/dji_m100_description
+	url = git@github.com:dji-m100-ros/dji_m100_description.git
