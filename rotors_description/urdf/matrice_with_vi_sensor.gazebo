@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2015 Fadri Furrer, ASL, ETH Zurich, Switzerland
+  Copyright 2015 Michael Burri, ASL, ETH Zurich, Switzerland
+  Copyright 2015 Mina Kamel, ASL, ETH Zurich, Switzerland
+  Copyright 2015 Janosch Nikolic, ASL, ETH Zurich, Switzerland
+  Copyright 2015 Markus Achtelik, ASL, ETH Zurich, Switzerland
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<robot name="$(arg mav_name)" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Instantiate the mav with a generic odometry sensor. -->
+  <xacro:include filename="$(find rotors_description)/urdf/mav_generic_odometry_sensor.gazebo" />
+
+
+<!--Mount a Camera-->
+
+  <xacro:camera_macro
+    namespace="${namespace}/camera"
+    parent_link="${namespace}/base_link"
+    camera_suffix="nadir"
+    frame_rate="60.0"
+    horizontal_fov="2.35"
+    image_width="1920"
+    image_height="1200"
+    image_format="R8G8B8"
+    min_distance="0.02"
+    max_distance="50"
+    noise_mean="0.0"
+    noise_stddev="0.007"
+    enable_visual="true">
+
+    <box size="0.023 0.0288 0.02955" />
+    <!-- origin xyz=".04459 .03925 -.05168" rpy="0 1.5708 0.785398" / -->
+    <origin xyz="0.0 0.0 -0.10" rpy="0 1.575 1.575" />
+  </xacro:camera_macro>
+
+<!--Mount ZED Stereo Camera -->
+  <xacro:zed_cam_macro
+      namespace="${namespace}/zed_cam"
+      parent_link="${namespace}/base_link"
+      enable_cameras="true"
+      enable_depth="true"
+      enable_ground_truth="true">
+
+    <!--origin xyz="0.05 0.00 -0.10168" rpy="0.0 0.523599 0.0" /-->
+    <!--origin xyz="0.05 0.00 -0.10168" rpy="0.0 0.9599 0.0" /-->
+    <origin xyz="0.05 0.00 -0.07168" rpy="0.0 0.523599 0.0" />
+  </xacro:zed_cam_macro>
+
+
+
+</robot>
